@@ -12,6 +12,9 @@ def add_pass():
     password = pass_input.get()
     with open("data.txt", "a") as file:
         file.write(f"{web} | {email} | {password}\n")
+    web_input.delete(0, END)
+    email_input.delete(0, END)
+    pass_input.delete(0, END)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
