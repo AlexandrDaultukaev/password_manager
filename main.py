@@ -1,9 +1,17 @@
 from tkinter import *
 
 FONT_NAME = "Arial"
+
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+def add_pass():
+    web = web_input.get()
+    email = email_input.get()
+    password = pass_input.get()
+    with open("data.txt", "a") as file:
+        file.write(f"{web} | {email} | {password}\n")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -32,17 +40,15 @@ web_input.focus()
 web_input.grid(row=1, column=1, columnspan=2)
 
 email_input = Entry(font=(FONT_NAME, 14, "bold"), bg="white", width=35)
-email_input.insert(0, "shyra31102000@mail.ru")
 email_input.grid(row=2, column=1, columnspan=2)
 
 pass_input = Entry(font=(FONT_NAME, 14, "bold"), bg="white", width=21)
 pass_input.grid(row=3, column=1)
 
-add_button = Button(text="Add", bg="lavender", bd=0, width=36, font=(FONT_NAME, 14, "bold"))
+add_button = Button(text="Add", bg="lavender", bd=0, width=36, font=(FONT_NAME, 14, "bold"), command=add_pass)
 add_button.grid(row=4, column=1, columnspan=2)
 
 gen_button = Button(text="Generate Password", bg="lavender", bd=0, width=15, font=(FONT_NAME, 12, "normal"))
 gen_button.grid(row=3, column=2)
-
 
 window.mainloop()
