@@ -1,5 +1,5 @@
 from tkinter import *
-
+from tkinter import messagebox
 FONT_NAME = "Arial"
 
 
@@ -10,8 +10,12 @@ def add_pass():
     web = web_input.get()
     email = email_input.get()
     password = pass_input.get()
-    with open("data.txt", "a") as file:
-        file.write(f"{web} | {email} | {password}\n")
+
+    is_ok = messagebox.askokcancel(title=web, message=f"Website: {web}\nEmail: {email}\nPassword: {password}\n\nIs everything "
+                                                   f"right?")
+    if is_ok:
+        with open("data.txt", "a") as file:
+            file.write(f"{web} | {email} | {password}\n")
     web_input.delete(0, END)
     email_input.delete(0, END)
     pass_input.delete(0, END)
