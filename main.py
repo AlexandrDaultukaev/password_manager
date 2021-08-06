@@ -10,6 +10,12 @@ def add_pass():
     web = web_input.get()
     email = email_input.get()
     password = pass_input.get()
+    if len(web) == 0 or len(email) == 0 or len(password) == 0:
+        messagebox.askokcancel(title="Error", message="Some fields empty")
+        return 0
+    if web == " " or email == " " or password == " ":
+        messagebox.askokcancel(title="Error", message="Incorrect input")
+        return 0
 
     is_ok = messagebox.askokcancel(title=web, message=f"Website: {web}\nEmail: {email}\nPassword: {password}\n\nIs everything "
                                                    f"right?")
