@@ -7,6 +7,24 @@ import json
 FONT_NAME = "Arial"
 
 
+# ---------------------------- SEARCH ------------------------------------------- #
+def search_data():
+    web = web_input.get()
+
+    try:
+        with open("data.json", "r") as file:
+            data = json.load(file)
+    except json.decoder.JSONDecodeError:
+        messagebox.askokcancel(title="Error", message="Your database is empty")
+    for website in data:
+        if website == web:
+            email_input.insert(END, data[website]["email"])
+            pass_input.insert(END, data[website]["password"])
+            messagebox.askokcancel(title=website, message=f"EMAIL: {data[website]['email']}\nPASSWORD: {data[website]['password']}")
+            return 0
+    messagebox.askokcancel(title="Error", message="No details for the website exists")
+
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_pass():
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
@@ -96,9 +114,9 @@ email_text.grid(row=2, column=0)
 pass_text = Label(text="Password:", font=(FONT_NAME, 14, "bold"), bg="white", padx=5, pady=10)
 pass_text.grid(row=3, column=0)
 
-web_input = Entry(font=(FONT_NAME, 14, "bold"), bg="white", width=35)
+web_input = Entry(font=(FONT_NAME, 14, "bold"), bg="white", width=21)
 web_input.focus()
-web_input.grid(row=1, column=1, columnspan=2)
+web_input.grid(row=1, column=1)
 
 email_input = Entry(font=(FONT_NAME, 14, "bold"), bg="white", width=35)
 email_input.grid(row=2, column=1, columnspan=2)
@@ -112,5 +130,8 @@ add_button.grid(row=4, column=1, columnspan=2)
 gen_button = Button(text="Generate Password", bg="lavender", bd=0, width=15, font=(FONT_NAME, 12, "normal"),
                     command=generate_pass)
 gen_button.grid(row=3, column=2)
+
+search_button = Button(text="Search", bg="lavender", bd=0, width=15, font=(FONT_NAME, 12, "normal"), command=search_data)
+search_button.grid(row=1, column=2)
 
 window.mainloop()
