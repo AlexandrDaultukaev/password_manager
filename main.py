@@ -16,10 +16,12 @@ def search_data():
             data = json.load(file)
     except json.decoder.JSONDecodeError:
         messagebox.askokcancel(title="Error", message="Your database is empty")
+    except FileNotFoundError:
+        messagebox.askokcancel(title="Error", message="Your database is empty")
     if web in data:
         email_input.insert(END, data[web]["email"])
         pass_input.insert(END, data[web]["password"])
-        messagebox.askokcancel(title=web, message=f"EMAIL: {data[web]['email']}\nPASSWORD: {data[web]['password']}")
+        messagebox.showinfo(title=web, message=f"EMAIL: {data[web]['email']}\nPASSWORD: {data[web]['password']}")
         return 0
     messagebox.askokcancel(title="Error", message="No details for the website exists")
 
