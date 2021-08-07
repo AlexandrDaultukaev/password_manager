@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from random import shuffle, choice, randint
 import pyperclip
+import json
 
 FONT_NAME = "Arial"
 
@@ -39,6 +40,14 @@ def add_pass():
     web = web_input.get()
     email = email_input.get()
     password = pass_input.get()
+
+    new_data = {
+        web: {
+            "email": email,
+            "password": password,
+        }
+    }
+
     if len(web) == 0 or len(email) == 0 or len(password) == 0:
         messagebox.askokcancel(title="Error", message="Some fields empty")
         return 0
@@ -46,11 +55,11 @@ def add_pass():
         messagebox.askokcancel(title="Error", message="Incorrect input")
         return 0
 
-    is_ok = messagebox.askokcancel(title=web, message=f"Website: {web}\nEmail: {email}\nPassword: {password}\n\nIs everything "
-                                                      f"right?")
-    if is_ok:
-        with open("data.txt", "a") as file:
-            file.write(f"{web} | {email} | {password}\n")
+    with open("data.json", "r") as file:
+        data = json.load(file)
+        data.update(new_data)
+    with open("data.json", "w") as file:
+        json.dump(data, file, indent=4)
     web_input.delete(0, END)
     email_input.delete(0, END)
     pass_input.delete(0, END)
