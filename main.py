@@ -55,14 +55,24 @@ def add_pass():
         messagebox.askokcancel(title="Error", message="Incorrect input")
         return 0
 
-    with open("data.json", "r") as file:
-        data = json.load(file)
-        data.update(new_data)
-    with open("data.json", "w") as file:
-        json.dump(data, file, indent=4)
-    web_input.delete(0, END)
-    email_input.delete(0, END)
-    pass_input.delete(0, END)
+    try:
+        with open("data.json", "r") as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        with open("data.json", "w") as file:
+            json.dump(new_data, file, indent=4)
+    # if JSON file is empty
+    except json.decoder.JSONDecodeError:
+        with open("data.json", "w") as file:
+            json.dump(new_data, file, indent=4)
+    else:
+        with open("data.json", "w") as file:
+            data.update(new_data)
+            json.dump(data, file, indent=4)
+    finally:
+        web_input.delete(0, END)
+        email_input.delete(0, END)
+        pass_input.delete(0, END)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
